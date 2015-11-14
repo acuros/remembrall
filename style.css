@@ -7,6 +7,9 @@ html, body {
     margin: 10px auto;
     width: 1000px;
 }
+#wrap > header {
+    display: none;
+}
 #login-button-wrap {
     text-align: center;
 }
@@ -28,6 +31,9 @@ html, body {
 
     font-weight: bold;
     font-size: 26pt;
+}
+#show-meaning {
+    margin-top: 10px;
 }
 #meaning {
     font-size: 20pt;

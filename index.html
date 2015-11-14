@@ -17,7 +17,7 @@
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
                     WordStore.init(response.authResponse, function() {
-                        WordStore.fetchWords($.proxy(TestView.startShowingWords, TestView));
+                        WordStore.fetchWords($.proxy(ViewManager.start, ViewManager));
                     });
                 } else if (response.status === 'not_authorized') {
                     $('#status').html('Please log into this app.');

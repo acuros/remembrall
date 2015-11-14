@@ -120,6 +120,11 @@ var ViewManager = {
 
         TestView.init();
         UploadView.init();
+    },
+
+    start: function() {
+        $('#wrap > header').show();
+        TestView.startShowingWords();
     }
 };
 
