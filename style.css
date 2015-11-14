@@ -1,12 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    margin: 10px auto;
+    width: 1000px;
+}
+
+#login-button-wrap {
+    text-align: center;
+}
+
 #login-button {
     display: none;
 }
-#status {
-    text-align: center;
-    font-weight: bold;
-    font-size: 20pt;
-}
-#word-wrap {
+
+#test-section {
     display: none;
 
     text-align: center;
@@ -28,4 +38,12 @@
 }
 #correct {
     margin-right: 20px;
+}
+
+#status {
+    height: 40px;
+
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
 }

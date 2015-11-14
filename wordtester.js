@@ -100,7 +100,7 @@ var TestView = {
             $('#status').html('You have no words');
             return;
         }
-        $('#word-wrap').show();
+        $('#test-section').show();
         $('#status').hide();
         this.showNextWord();
     },
@@ -116,4 +116,8 @@ var TestView = {
         $('#show-meaning').hide();
         $('.check-button').show();
     }
+};
+
+var UploadView = {
+
 };

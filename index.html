@@ -44,17 +44,20 @@
     <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
-<fb:login-button scope="public_profile,email" id="login-button" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-    Loading ...
-</div>
-<div id="word-wrap">
-    <span id="word"></span>
-    <span id="meaning"></span>
-    <button id="show-meaning">Show Meaning</button><br><br>
-    <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+<div id="wrap">
+    <div id="status">
+        Loading ...
+    </div>
+    <div id="login-button-wrap">
+        <fb:login-button scope="public_profile,email" id="login-button" onlogin="checkLoginState();">
+        </fb:login-button>
+    </div>
+    <section id="test-section">
+        <span id="word"></span>
+        <span id="meaning"></span>
+        <button id="show-meaning">Show Meaning</button><br><br>
+        <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+    </section>
 </div>
 </body>
 </html>
