@@ -58,10 +58,15 @@
     </header>
     <div id="main">
         <section id="test-section" class="menu-section">
+            <span id="progress">
+                <span id="current-index"></span> / <span id="number-of-words"></span>
+            </span>
             <span id="word"></span>
             <span id="meaning"></span>
-            <button id="show-meaning">Show Meaning</button><br><br>
-            <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+            <button id="show-meaning">Show Meaning</button>
+            <div id="check-button-wrap">
+                <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+            </div>
         </section>
         <section id="upload-section" class="menu-section">
             <form id="upload-form">

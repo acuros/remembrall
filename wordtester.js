@@ -171,6 +171,7 @@ var TestView = {
         }
         $('#test-section').show();
         $('#status').hide();
+        $('#number-of-words').html(WordStore.count());
         this.showNextWord();
     },
 
@@ -179,6 +180,7 @@ var TestView = {
         $('#show-meaning').show();
         $('#meaning').hide();
         $('.check-button').hide();
+        $('#current-index').html(this.wordIndex + 1);
     },
 
     checkAnswer: function() {

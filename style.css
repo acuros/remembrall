@@ -38,6 +38,9 @@ html, body {
 #meaning {
     font-size: 20pt;
 }
+#check-button-wrap {
+    margin-top: 30px;
+}
 .check-button {
     display: none;
 
