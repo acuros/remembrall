@@ -34,12 +34,12 @@ var WordStore = {
     init: function(fbCredential, callback) {
         this.userId = fbCredential.userID;
         StsRoleAssumer.assume(fbCredential, $.proxy(function(credentialData) {
-            this.onRoleAssumed(credentialData);
+            this.prepareDyanmoDB(credentialData);
             callback();
         }, this));
     },
 
-    onRoleAssumed: function(credentialData) {
+    prepareDyanmoDB: function(credentialData) {
         var awsCredential = new AWS.Credentials(
             credentialData.AccessKeyId,
             credentialData.SecretAccessKey,
