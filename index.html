@@ -38,7 +38,7 @@
         }(document, 'script', 'facebook-jssdk'));
 
         $(function() {
-            TestView.init();
+            ViewManager.init();
         })
     </script>
     <link type="text/css" rel="stylesheet" href="style.css">
@@ -52,12 +52,32 @@
         <fb:login-button scope="public_profile,email" id="login-button" onlogin="checkLoginState();">
         </fb:login-button>
     </div>
-    <section id="test-section">
-        <span id="word"></span>
-        <span id="meaning"></span>
-        <button id="show-meaning">Show Meaning</button><br><br>
-        <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
-    </section>
+    <header>
+        <a href="" id="test-menu">Test</a>
+        <a href="" id="upload-menu">Add</a>
+    </header>
+    <div id="main">
+        <section id="test-section" class="menu-section">
+            <span id="word"></span>
+            <span id="meaning"></span>
+            <button id="show-meaning">Show Meaning</button><br><br>
+            <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+        </section>
+        <section id="upload-section" class="menu-section">
+            <form id="upload-form">
+                <fieldset>
+                    <legend>Add a new word</legend>
+                    <dl>
+                        <dt><label for="new-word">Word</label></dt>
+                        <dd><input type="text" id="new-word"></dd>
+                        <dt><label for="new-word-meaning">Meaning</label></dt>
+                        <dd><input type="text" id="new-word-meaning"></dd>
+                    </dl>
+                    <input type="submit" value="Save">
+                </fieldset>
+            </form>
+        </section>
+    </div>
 </div>
 </body>
 </html>

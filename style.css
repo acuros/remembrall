@@ -7,14 +7,16 @@ html, body {
     margin: 10px auto;
     width: 1000px;
 }
-
 #login-button-wrap {
     text-align: center;
 }
-
 #login-button {
     display: none;
 }
+#main {
+    margin-top: 20px;
+}
+
 
 #test-section {
     display: none;
@@ -46,4 +48,10 @@ html, body {
     text-align: center;
     font-weight: bold;
     font-size: 20pt;
+}
+
+
+
+#upload-section {
+    display: none;
 }

@@ -83,6 +83,24 @@ var WordStore = {
     }
 };
 
+var ViewManager = {
+    init: function() {
+        $('#test-menu').click(function(e) {
+            e.preventDefault();
+            $('.menu-section').hide();
+            $('#test-section').show();
+        });
+        $('#upload-menu').click(function(e) {
+            e.preventDefault();
+            $('.menu-section').hide();
+            $('#upload-section').show();
+        });
+
+        TestView.init();
+        UploadView.init();
+    }
+};
+
 var TestView = {
     wordIndex: -1,
 
@@ -119,5 +137,9 @@ var TestView = {
 };
 
 var UploadView = {
-
+    init: function() {
+        $('#upload-form').submit(function(e) {
+            e.preventDefault();
+        });
+    }
 };
