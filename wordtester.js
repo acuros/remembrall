@@ -21,9 +21,9 @@ var StsRoleAssumer = {
     }
 };
 
-var Word = function(wordItem) {
-    this.name = wordItem['word']['S'];
-    this.meaning = wordItem['meaning']['S'];
+var Word = function(name, meaning) {
+    this.name = name;
+    this.meaning = meaning
 };
 
 var WordStore = {
@@ -55,7 +55,7 @@ var WordStore = {
         var that = this;
         this.dynamodb.query(
             {
-                TableName: "Word",
+                TableName: 'Word',
                 KeyConditions: {
                     user: {
                         ComparisonOperator: 'EQ',
@@ -68,10 +68,32 @@ var WordStore = {
                     $('#status').html('Error on fetching words from Dynamodb');
                     return;
                 }
-                that.words = data.Items.map(function(obj) {return new Word(obj);});
+                that.words = data.Items.map(function(obj) {return new Word(obj['word']['S'], obj['meaning']['S']);});
                 callback();
             }
         );
+    },
+
+    uploadWord: function(word) {
+        this.dynamodb.putItem(
+            {
+                TableName: 'Word',
+                Item: {
+                    user: {
+                        S: this.userId
+                    },
+                    word: {
+                        S: word.name
+                    },
+                    meaning: {
+                        S: word.meaning
+                    }
+                }
+            },
+            function(err, data) {
+                console.log('Put', err, data);
+            }
+        )
     },
 
     at: function(index) {
@@ -126,11 +148,12 @@ var TestView = {
     showNextWord: function() {
         $('#word').html(WordStore.at(++this.wordIndex).name);
         $('#show-meaning').show();
+        $('#meaning').hide();
         $('.check-button').hide();
     },
 
     checkAnswer: function() {
-        $('#meaning').html(WordStore.at(this.wordIndex).meaning);
+        $('#meaning').html(WordStore.at(this.wordIndex).meaning).show();
         $('#show-meaning').hide();
         $('.check-button').show();
     }
@@ -138,8 +161,15 @@ var TestView = {
 
 var UploadView = {
     init: function() {
-        $('#upload-form').submit(function(e) {
-            e.preventDefault();
-        });
+        $('#upload-form').submit($.proxy(this.uploadNewWord, this));
+    },
+
+    uploadNewWord: function(e) {
+        e.preventDefault();
+        var word = new Word($('#new-word').val(), $('#new-word-meaning').val());
+        WordStore.uploadWord(word);
+
+        $('#new-word').val('');
+        $('#new-word-meaning').val('');
     }
 };
