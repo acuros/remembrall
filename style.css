@@ -19,11 +19,12 @@ html, body {
 #main {
     margin-top: 20px;
 }
+#main > section {
+    display: none;
+}
 
 
 #test-section {
-    display: none;
-
     text-align: center;
 }
 #word {
@@ -51,16 +52,26 @@ html, body {
     margin-right: 20px;
 }
 
+#score-section {
+    text-align: center;
+}
+#score-description {
+    font-size: 25pt;
+}
+#score {
+    font-weight: bold;
+}
+#start-next-cycle {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 12pt;
+}
+
+
 #status {
     height: 40px;
 
     text-align: center;
     font-weight: bold;
     font-size: 20pt;
-}
-
-
-
-#upload-section {
-    display: none;
 }

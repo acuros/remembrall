@@ -81,6 +81,10 @@ var WordStore = {
         });
     },
 
+    all: function() {
+        return this.words.slice()
+    },
+
     fetchWords: function(callback) {
         var that = this;
         this.dynamodb.query(
@@ -118,14 +122,6 @@ var WordStore = {
                 }
             }
         )
-    },
-
-    at: function(index) {
-        return this.words[index];
-    },
-
-    count: function() {
-        return this.words.length;
     }
 };
 
@@ -148,35 +144,52 @@ var ViewManager = {
 
     start: function() {
         $('#wrap > header').show();
-        TestView.startShowingWords();
+        $('#status').hide();
+        TestView.nextCycleWords = WordStore.all();
+        TestView.startNextCycle();
     }
 };
 
 var TestView = {
     wordIndex: -1,
+    words: [],
+    nextCycleWords: [],
 
     init: function() {
-        $('#show-meaning').click($.proxy(function() {
-            this.checkAnswer();
+        $('#show-meaning').click($.proxy(this.checkAnswer, this));
+        $('#correct').click($.proxy(this.goToNext, this));
+        $('#wrong').click($.proxy(function() {
+            this.nextCycleWords.push(this.words[this.wordIndex]);
+            this.goToNext();
         }, this));
-        $('.check-button').click($.proxy(function() {
-            this.showNextWord();
-        }, this));
+        $('#start-next-cycle').click($.proxy(this.startNextCycle, this));
     },
 
-    startShowingWords: function() {
-        if(WordStore.count() == 0) {
-            $('#status').html('You have no words');
+    startNextCycle: function() {
+        this.words = this.nextCycleWords;
+        this.nextCycleWords = [];
+        this.wordIndex = -1;
+        if(this.words.length == 0) {
+            $('#status').html('There is no words to test');
             return;
         }
+        $('#score-section').hide();
         $('#test-section').show();
-        $('#status').hide();
-        $('#number-of-words').html(WordStore.count());
-        this.showNextWord();
+        $('#number-of-words').html(this.words.length);
+        this.goToNext();
+    },
+
+    goToNext: function() {
+        if(this.wordIndex + 1 < this.words.length) {
+            this.showNextWord();
+        }
+        else {
+            this.showScore();
+        }
     },
 
     showNextWord: function() {
-        $('#word').html(WordStore.at(++this.wordIndex).name);
+        $('#word').html(this.words[++this.wordIndex].name);
         $('#show-meaning').show();
         $('#meaning').hide();
         $('.check-button').hide();
@@ -184,9 +197,16 @@ var TestView = {
     },
 
     checkAnswer: function() {
-        $('#meaning').html(WordStore.at(this.wordIndex).meaning).show();
+        $('#meaning').html(this.words[this.wordIndex].meaning).show();
         $('#show-meaning').hide();
         $('.check-button').show();
+    },
+
+    showScore: function() {
+        var correctCount = this.words.length - this.nextCycleWords.length;
+        $('#score').html(correctCount + '/' + this.words.length);
+        $('#score-section').show();
+        $('#test-section').hide();
     }
 };
 
