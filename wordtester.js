@@ -1,3 +1,19 @@
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+
 var StsRoleAssumer = {
     assume: function(fbCredential, callback) {
         new AWS.STS().assumeRoleWithWebIdentity(
@@ -82,7 +98,9 @@ var WordStore = {
                     $('#status').html('Error on fetching words from Dynamodb');
                     return;
                 }
-                that.words = data.Items.map(function(obj) {return new Word(obj['word']['S'], obj['meaning']['S']);});
+                that.words = shuffle(data.Items.map(function(obj) {
+                    return new Word(obj['word']['S'], obj['meaning']['S']);
+                }));
                 callback();
             }
         );
