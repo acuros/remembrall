@@ -1,0 +1,31 @@
+#login-button {
+    display: none;
+}
+#status {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
+}
+#word-wrap {
+    display: none;
+
+    text-align: center;
+}
+#word {
+    display: block;
+
+    font-weight: bold;
+    font-size: 26pt;
+}
+#meaning {
+    font-size: 20pt;
+}
+.check-button {
+    display: none;
+
+    font-size: 25pt;
+    padding: 15px;
+}
+#correct {
+    margin-right: 20px;
+}

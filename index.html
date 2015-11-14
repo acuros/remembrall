@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="aws-sdk-2.2.17.min.js"></script>
+    <script src="wordtester.js"></script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1647663812151516',
+                xfbml      : true,
+                version    : 'v2.5'
+            });
+
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    WordStore.init(response.authResponse, function() {
+                        WordStore.fetchWords($.proxy(TestView.startShowingWords, TestView));
+                    });
+                } else if (response.status === 'not_authorized') {
+                    $('#status').html('Please log into this app.');
+                    $('#login-button').show()
+                } else {
+                    $('#status').html('Please log into Facebook.');
+                    $('#login-button').show()
+                }
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        $(function() {
+            TestView.init();
+        })
+    </script>
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+<fb:login-button scope="public_profile,email" id="login-button" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+    Loading ...
+</div>
+<div id="word-wrap">
+    <span id="word"></span>
+    <span id="meaning"></span>
+    <button id="show-meaning">Show Meaning</button><br><br>
+    <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
+</div>
+</body>
+</html>
