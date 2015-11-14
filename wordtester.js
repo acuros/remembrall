@@ -180,7 +180,7 @@ var UploadView = {
         var word = new Word($('#new-word').val(), $('#new-word-meaning').val());
         WordStore.uploadWord(word);
 
-        $('#new-word').val('');
         $('#new-word-meaning').val('');
+        $('#new-word').val('').focus();
     }
 };
