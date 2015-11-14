@@ -26,6 +26,20 @@ var Word = function(name, meaning) {
     this.meaning = meaning
 };
 
+Word.prototype.toItem = function() {
+    return {
+        user: {
+            S: WordStore.userId
+        },
+        word: {
+            S: this.name
+        },
+        meaning: {
+            S: this.meaning
+        }
+    }
+};
+
 var WordStore = {
     words: [],
     dynamodb: null,
@@ -78,20 +92,12 @@ var WordStore = {
         this.dynamodb.putItem(
             {
                 TableName: 'Word',
-                Item: {
-                    user: {
-                        S: this.userId
-                    },
-                    word: {
-                        S: word.name
-                    },
-                    meaning: {
-                        S: word.meaning
-                    }
-                }
+                Item: word.toItem()
             },
             function(err, data) {
-                console.log('Put', err, data);
+                if(err) {
+                    $('#status').html('Error on saving new word');
+                }
             }
         )
     },
