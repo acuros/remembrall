@@ -102,9 +102,7 @@ var WordStore = {
                     $('#status').html('Error on fetching words from Dynamodb');
                     return;
                 }
-                that.words = shuffle(data.Items.map(function(obj) {
-                    return new Word(obj['word']['S'], obj['meaning']['S']);
-                }));
+                that.words = data.Items.map(function(obj) {return new Word(obj['word']['S'], obj['meaning']['S']);                });
                 callback();
             }
         );
@@ -166,7 +164,7 @@ var TestView = {
     },
 
     startNextCycle: function() {
-        this.words = this.nextCycleWords;
+        this.words = shuffle(this.nextCycleWords);
         this.nextCycleWords = [];
         this.wordIndex = -1;
         if(this.words.length == 0) {
