@@ -1,0 +1,22 @@
+{
+  "name": "wordtester",
+  "version": "0.0.1",
+  "dependencies": {
+    "aws-sdk": "^2.2.17",
+    "babel-loader": "^5.4.0",
+    "jquery": "^2.1.4",
+    "jsx-loader": "^0.13.2",
+    "react": "0.14.2",
+    "react-dom": "^0.14.2"
+  },
+  "main": "wordtester.js",
+  "devDependencies": {
+    "webpack": "^1.12.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Helps memorizing custom word list"
+}
