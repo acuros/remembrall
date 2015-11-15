@@ -42,6 +42,10 @@ var Word = function(name, meaning) {
     this.meaning = meaning
 };
 
+Word.fromItem = function(item) {
+    return new Word(item['word']['S'], item['meaning']['S']);
+};
+
 Word.prototype.toItem = function() {
     return {
         user: {
@@ -102,7 +106,7 @@ var WordStore = {
                     $('#status').html('Error on fetching words from Dynamodb');
                     return;
                 }
-                that.words = data.Items.map(function(obj) {return new Word(obj['word']['S'], obj['meaning']['S']);                });
+                that.words = data.Items.map(function(item) {return Word.fromItem(item)});
                 callback();
             }
         );
@@ -129,6 +133,8 @@ var ViewManager = {
             e.preventDefault();
             $('.menu-section').hide();
             $('#test-section').show();
+            TestView.nextCycleWords = WordStore.all();
+            TestView.startNextCycle();
         });
         $('#upload-menu').click(function(e) {
             e.preventDefault();
