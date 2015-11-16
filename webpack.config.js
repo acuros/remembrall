@@ -3,14 +3,14 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         app: './src/app.jsx',
-        vendor: ['jquery', 'react', 'react-dom', 'reflux', 'reflux-promise', 'q']
+        vendor: ['jquery', 'react', 'react-dom', 'reflux', 'reflux-promise', 'q', 'classnames']
     },
     output: {
         path: 'dist',
         filename: '[name].js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css'],
+        extensions: ['', '.js', '.jsx', '.less'],
         root: __dirname + '\\src'
     },
     plugins: [
@@ -19,7 +19,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.jsx$/, loader: 'jsx' },
-            { test: /\.css$/, loader: 'style!css' }
+            { test: /\.less$/, loader: 'style!css!less' }
         ]
     }
 };
