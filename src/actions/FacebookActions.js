@@ -2,7 +2,8 @@ var Reflux = require('reflux');
 
 
 var FacebookActions = Reflux.createActions({
-    "login": {asyncResult: true}
+    "login": {asyncResult: true},
+    "checkLoginStatus": {asyncResult: true}
 });
 
 

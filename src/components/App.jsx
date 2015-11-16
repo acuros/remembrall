@@ -11,7 +11,9 @@ var App = React.createClass({
     mixins: [Reflux.connect(FacebookStore, 'facebook')],
 
     componentDidMount: function() {
-        this.loadFacebookSDK();
+        this.loadFacebookSDK(function() {
+            FacebookActions.checkLoginStatus.triggerAsync();
+        });
     },
     componentWillUnmount: function() {
     },
@@ -20,7 +22,7 @@ var App = React.createClass({
             <div id="wrap">
                 <header>
                     {
-                        !this.state.facebook.isAuthenticated &&
+                        this.state.facebook.isAuthenticated === false &&
                         <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>
                     }
                 </header>
@@ -32,9 +34,8 @@ var App = React.createClass({
             alert('Success');
         })
     },
-    loadFacebookSDK: function() {
-        window.fbAsyncInit = function() {
-        }.bind(this);
+    loadFacebookSDK: function(onFbAsyncInit) {
+        window.fbAsyncInit = onFbAsyncInit();
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
