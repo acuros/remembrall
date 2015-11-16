@@ -3,7 +3,10 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         app: './src/app.jsx',
-        vendor: ['jquery', 'react', 'react-dom', 'reflux', 'reflux-promise', 'q', 'classnames']
+        vendor: [
+            'jquery', 'q', 'classnames',
+            'react', 'react-dom', 'reflux', 'reflux-promise', 'react-router'
+        ]
     },
     output: {
         path: 'dist',
