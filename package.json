@@ -7,8 +7,11 @@
     "css-loader": "^0.23.0",
     "jquery": "^2.1.4",
     "jsx-loader": "^0.13.2",
+    "q": "^1.4.1",
     "react": "0.14.2",
     "react-dom": "^0.14.2",
+    "reflux": "^0.3.0",
+    "reflux-promise": "^1.0.2",
     "style-loader": "^0.13.0"
   },
   "main": "wordtester.js",
