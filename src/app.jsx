@@ -19,4 +19,4 @@ ReactDOM.render((
         <Route path="/" component={App}>
         </Route>
     </Router>
-), document.getElementById('wrap'));
+), document.getElementById('react-outer-wrap'));
