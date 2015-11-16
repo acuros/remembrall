@@ -21,11 +21,16 @@ var App = React.createClass({
                 <header>
                     {
                         !this.state.facebook.isAuthenticated &&
-                        <button id="facebook-login" onClick={FacebookActions.login}>Log In with Facebook</button>
+                        <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>
                     }
                 </header>
             </div>
         );
+    },
+    loginWithFacebook: function() {
+        FacebookActions.login.triggerAsync().then(function() {
+            alert('Success');
+        })
     },
     loadFacebookSDK: function() {
         window.fbAsyncInit = function() {
