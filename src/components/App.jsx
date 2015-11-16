@@ -1,9 +1,9 @@
 var React = require('react');
 var ClassNames = require('classnames');
 
-require('style/common');
-require('style/index');
-var FacebookLogin = require('component/FacebookLogin');
+require('styles/common');
+require('styles/index');
+var FacebookLogin = require('components/FacebookLogin');
 
 var App = React.createClass({
     fbStatus: null,

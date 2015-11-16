@@ -12,7 +12,7 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Router;
 
 
-var App =  require('component/App');
+var App =  require('components/App');
 
 ReactDOM.render((
     <Router>
