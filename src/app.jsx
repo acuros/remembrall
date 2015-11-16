@@ -7,6 +7,16 @@ var Q = require('q');
 Reflux.use(RefluxPromise(Q.Promise));
 
 
-var Index =  require('component/Index');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Router;
 
-ReactDOM.render(<Index />, document.getElementById('wrap'));
+
+var App =  require('component/App');
+
+ReactDOM.render((
+    <Router>
+        <Route path="/" component={App}>
+        </Route>
+    </Router>
+), document.getElementById('wrap'));
