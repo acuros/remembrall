@@ -1,5 +1,5 @@
 var React = require('react');
-require('./css/fblogin.css');
+require('css/fblogin.css');
 
 module.exports = React.createClass({
 

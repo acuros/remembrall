@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: './app.jsx',
+        app: './src/app.jsx',
         vendor: ['jquery', 'react', 'react-dom']
     },
     output: {
@@ -10,7 +10,8 @@ module.exports = {
         filename: '[name].js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css']
+        extensions: ['', '.js', '.jsx', '.css'],
+        root: __dirname + '\\src'
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")
