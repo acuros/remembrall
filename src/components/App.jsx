@@ -1,40 +1,42 @@
 var React = require('react');
-var ClassNames = require('classnames');
+var Reflux = require('reflux');
+
+var FacebookActions = require('actions/FacebookActions');
+var FacebookStore = require('stores/FacebookStore');
 
 require('styles/common');
 require('styles/index');
-var FacebookLogin = require('components/FacebookLogin');
 
 var App = React.createClass({
-    fbStatus: null,
-    loginOption: {scope: 'public_profile, email'},
+    mixins: [Reflux.connect(FacebookStore, 'facebook')],
+
     componentDidMount: function() {
         this.loadFacebookSDK();
     },
     componentWillUnmount: function() {
     },
     render: function() {
-        var fbLoginClassName = ClassNames({
-            'hidden': !this.fbStatus || this.fbStatus == 'connected'
-        });
         return (
-            <section id="index-section">
-                <div id="facebook-login-wrap" className={fbLoginClassName}>
-                    <FacebookLogin onStatusChange={this.onFBStatusChange}/>
-                </div>
-            </section>
+            <div id="wrap">
+                <header>
+                    {
+                        !this.state.facebook.isAuthenticated &&
+                        <button id="facebook-login" onClick={FacebookActions.login}>Log In with Facebook</button>
+                    }
+                </header>
+            </div>
         );
     },
-    onFBStatusChange: function(response) {
-        if (response.status === 'connected') {
-            /*WordStore.init(response.authResponse, function() {
-                WordStore.fetchWords($.proxy(ViewManager.start, ViewManager));
-            });*/
-        } else if (response.status === 'not_authorized') {
-        } else {
-        }
-    },
     loadFacebookSDK: function() {
+        window.fbAsyncInit = function() {
+        }.bind(this);
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1647663812151516";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     }
 });
 
