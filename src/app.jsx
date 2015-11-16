@@ -7,6 +7,6 @@ var Q = require('q');
 Reflux.use(RefluxPromise(Q.Promise));
 
 
-var Index =  require('component/index');
+var Index =  require('component/Index');
 
 ReactDOM.render(<Index />, document.getElementById('wrap'));
