@@ -1,8 +1,8 @@
 var Reflux = require('reflux');
 
-var RemembrallActions = Reflux.createActions({
+var WordActions = Reflux.createActions({
     fetchWords: {asyncResult: true}
 });
 
 
-module.exports = RemembrallActions;
+module.exports = WordActions;
