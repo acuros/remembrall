@@ -18,7 +18,11 @@ module.exports = {
         root: __dirname + '\\src'
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")
+        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+        new webpack.DefinePlugin({
+            FB_APP_ID: JSON.stringify('1647663812151516'),
+            ROLE_ARN: JSON.stringify('arn:aws:iam::617665285615:role/RemembrallDev')
+        })
     ],
     module: {
         loaders: [

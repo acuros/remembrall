@@ -15,7 +15,7 @@ var AwsHelper = {
         return Q.Promise(function(resolve, reject) {
             new AWS.STS().assumeRoleWithWebIdentity(
                 {
-                    RoleArn: 'arn:aws:iam::617665285615:role/WebFedrationTest',
+                    RoleArn: ROLE_ARN,
                     RoleSessionName: userId,
                     WebIdentityToken: accessToken,
                     ProviderId: 'graph.facebook.com'
