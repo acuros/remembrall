@@ -1,6 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
 var Q = require('q');
+var Link = require('react-router').Link;
 
 var WordActions = require('actions/WordActions');
 var FacebookActions = require('actions/FacebookActions');
@@ -32,14 +33,19 @@ var App = React.createClass({
                 <header>
                     {
                         this.state.facebook.isAuthenticated === false &&
-                        <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>
+                        <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button> ||
+                        <nav>
+                            <Link to="/test">Test</Link> / <Link to="/manage">Manage</Link>
+                        </nav>
                     }
                 </header>
+                <div id="children-wrap">
+                    {this.props.children}
+                </div>
                 {
                     this.state.spinner.isVisible &&
                     <Spinner message={this.state.spinner.message} />
-                }
-                {this.props.children}
+                    }
             </div>
         );
     },
