@@ -1,7 +1,6 @@
 var React = require('react');
 var Reflux = require('reflux');
 
-var WordStore = require('stores/WordStore');
 var WordCard = require('components/WordCard');
 
 function shuffle(array) {
@@ -20,20 +19,26 @@ function shuffle(array) {
 }
 
 var WordTester = React.createClass({
+    nextCycleWords: [],
+
+    propTypes: {words: React.PropTypes.array.isRequired},
+
     getInitialState: function() {
         return {
-            words: shuffle(WordStore.getList()),
+            words: [],
             wordIndex: 0,
             corrects: 0
         }
     },
-    mixins: [Reflux.listenTo(WordStore, "onWordListChange")],
+    componentWillReceiveProps: function(nextProps) {
+        this.startNewCycle(nextProps.words);
+    },
 
     render: function() {
         return (
             <section id="test-section">
                 <header>
-                    {this.state.wordIndex } / {this.state.words.length}
+                    {Math.min(this.state.wordIndex + 1, this.state.words.length)} / {this.state.words.length}
                 </header>
                 {
                     this.state.words.length > 0 &&
@@ -51,21 +56,35 @@ var WordTester = React.createClass({
         return (
             <div id="score-board">
                 <span className="score">Your score is {this.state.corrects} / {this.state.words.length}</span>
+                <div id="actions">
+                    <button className="finish-action" onClick={this.continueWithTheWrongs}>Continue</button>
+                    <button className="finish-action" onClick={this.restart}>Restart</button>
+                </div>
             </div>
         );
     },
     markCurrentWord: function(isCorrect) {
+        if(!isCorrect) {
+            this.nextCycleWords.push(this.state.words[this.state.wordIndex]);
+        }
         this.setState({
             wordIndex: this.state.wordIndex + 1,
             corrects: this.state.corrects + (isCorrect ? 1 : 0)
         });
     },
-    onWordListChange: function(words) {
+    startNewCycle: function(words) {
+        this.nextCycleWords = [];
         this.setState({
             words: shuffle(words),
             wordIndex: 0,
             corrects: 0
         });
+    },
+    restart: function() {
+        this.startNewCycle(this.props.words);
+    },
+    continueWithTheWrongs: function() {
+        this.startNewCycle(this.nextCycleWords);
     }
 });
 

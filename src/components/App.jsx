@@ -14,10 +14,12 @@ var AwsHelper = require('utils/AwsHelper');
 
 var Spinner = require('components/Spinner');
 var WordTester = require('components/WordTester');
+var WordStore = require('stores/WordStore');
 require('styles/style');
 
 var App = React.createClass({
     mixins: [
+        Reflux.connect(WordStore, 'words'),
         Reflux.connect(FacebookStore, 'facebook'),
         Reflux.connect(SpinnerStore, 'spinner')
     ],
@@ -48,7 +50,7 @@ var App = React.createClass({
                     (
                         this.props.children &&
                         <div id="children-wrap">{this.props.children}</div> ||
-                        <WordTester />
+                        <WordTester words={this.state.words} />
                     )
                 }
                 {
