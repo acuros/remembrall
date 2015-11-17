@@ -6,7 +6,6 @@ var WordActions = require('actions/WordActions');
 var FacebookActions = require('actions/FacebookActions');
 var SpinnerActions = require('actions/SpinnerActions');
 
-var WordStore = require('stores/WordStore');
 var FacebookStore = require('stores/FacebookStore');
 var SpinnerStore = require('stores/SpinnerStore');
 
@@ -19,8 +18,7 @@ require('styles/index');
 var App = React.createClass({
     mixins: [
         Reflux.connect(FacebookStore, 'facebook'),
-        Reflux.connect(SpinnerStore, 'spinner'),
-        Reflux.connect(WordStore, 'words')
+        Reflux.connect(SpinnerStore, 'spinner')
     ],
 
     componentDidMount: function() {
@@ -42,11 +40,7 @@ var App = React.createClass({
                     this.state.spinner.isVisible &&
                     <Spinner message={this.state.spinner.message} />
                 }
-                {
-                    this.state.words.map(function(word) {
-                        return word.name + " "
-                    })
-                }
+                {this.props.children}
             </div>
         );
     },
@@ -70,6 +64,9 @@ var App = React.createClass({
             .then(function() {
                 SpinnerActions.show("Getting words ...");
                 return WordActions.fetchWords.triggerAsync()
+            })
+            .then(function() {
+                window.location.hash = "/test";
             })
             .catch(function(errType, msg) {
                 console.log(errType, msg);
