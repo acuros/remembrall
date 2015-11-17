@@ -11,7 +11,7 @@ var WordCard = React.createClass({
         return (<div className="word-card">
             <span className="name">{this.props.word.name}</span>
             <span className="meaning">{this.props.word.meaning}</span>
-            <button onClick={this.props.onFinish}>Next</button>
+            <button className="next-button" onClick={this.props.onFinish}>Next</button>
         </div>);
     }
 });

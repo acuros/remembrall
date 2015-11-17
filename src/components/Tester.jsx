@@ -7,7 +7,7 @@ var WordCard = require('components/WordCard');
 var Tester = React.createClass({
     getInitialState: function() {
         return {
-            words: [],
+            words: WordStore.getList(),
             wordIndex: 0
         }
     },
@@ -16,6 +16,7 @@ var Tester = React.createClass({
     render: function() {
         return (
             <section id="test-section">
+                <h1>Test words!</h1>
                 {
                     this.state.words.length > 0 &&
                     <WordCard word={this.state.words[this.state.wordIndex]} onFinish={this.showNextWord}/>

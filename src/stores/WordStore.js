@@ -23,6 +23,9 @@ var WordStore = Reflux.createStore({
     getInitialState: function() {
         return []
     },
+    getList: function() {
+        return words.slice();
+    },
 
     onFetchWords: function() {
         AwsHelper.dynamodb.query({

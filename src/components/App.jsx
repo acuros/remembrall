@@ -12,8 +12,7 @@ var SpinnerStore = require('stores/SpinnerStore');
 var AwsHelper = require('utils/AwsHelper');
 
 var Spinner = require('components/Spinner');
-require('styles/common');
-require('styles/index');
+require('styles/style');
 
 var App = React.createClass({
     mixins: [
