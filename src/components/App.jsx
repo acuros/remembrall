@@ -18,7 +18,7 @@ var App = React.createClass({
     ],
 
     componentDidMount: function() {
-        SpinnerActions.show("Loading ...");
+        SpinnerActions.show("Checking login status ...");
         this.loadFacebookSDK(function() {
             FacebookActions.checkLoginStatus.triggerAsync().then(function() {
                 SpinnerActions.hide();
@@ -42,7 +42,7 @@ var App = React.createClass({
         );
     },
     loginWithFacebook: function() {
-        SpinnerActions.show("Loading ...");
+        SpinnerActions.show("Logging in...");
         FacebookActions.login.triggerAsync().then(function() {
             SpinnerActions.hide();
         });
