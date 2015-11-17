@@ -60,7 +60,5 @@ var FacebookStore = Reflux.createStore({
     }
 });
 
-console.log(FacebookStore);
-
 
 module.exports = FacebookStore;
