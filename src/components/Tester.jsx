@@ -19,18 +19,18 @@ var Tester = React.createClass({
                 <h1>Test words!</h1>
                 {
                     this.state.words.length > 0 &&
-                    <WordCard word={this.state.words[this.state.wordIndex]} onFinish={this.showNextWord}/>
+                    <WordCard word={this.state.words[this.state.wordIndex]} onMark={this.markCurrentWord}/>
                 }
             </section>
         )
     },
 
-    showNextWord: function() {
+    markCurrentWord: function(isCorrect) {
+        console.log(isCorrect);
         this.setState({
             wordIndex: this.state.wordIndex + 1
         });
     },
-
     onWordListChange: function(words) {
         this.setState({
             words: words

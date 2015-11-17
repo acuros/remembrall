@@ -23,14 +23,33 @@ html, body {
 
     .name {
       display: block;
-      font-size: 26pt;
+      font-size: 28pt;
+      font-weight: bold;
     }
-    .meaning {
-      display: block;
-      font-size: 18pt;
+
+    .grading-block {
+      display: inline-block;
+      .meaning {
+        display: block;
+        font-size: 24pt;
+      }
+
+      .mark {
+        margin-top: 30px;
+        padding: 5px 10px;
+        font-size: 20pt;
+
+        &.correct {
+          float: left;
+        }
+        &.wrong {
+          float: right;
+        }
+      }
     }
-    .next-button {
-      margin-top: 20px;
+    .show-meaning {
+      margin-top: 30px;
+      font-size: 16pt;
     }
   }
 }
