@@ -5,7 +5,7 @@ module.exports = {
         app: './src/app.jsx',
         vendor: [
             'jquery', 'q', 'classnames',
-            'react', 'react-dom', 'reflux', 'reflux-promise', 'react-router'
+            'react', 'react-dom', 'reflux', 'reflux-promise', 'react-router', 'react-spinkit'
         ]
     },
     output: {
@@ -22,6 +22,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.jsx$/, loader: 'jsx' },
+            { test: /\.css$/, loader: 'style!css' },
             { test: /\.less$/, loader: 'style!css!less' }
         ]
     }
