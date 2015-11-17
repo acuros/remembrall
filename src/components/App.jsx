@@ -1,9 +1,12 @@
 var React = require('react');
 var Reflux = require('reflux');
+var Q = require('q');
 
+var AwsHelper = require('utils/AwsHelper');
+var WordActions = require('actions/WordActions');
 var FacebookActions = require('actions/FacebookActions');
 var SpinnerActions = require('actions/SpinnerActions');
-
+var WordStore = require('stores/WordStore');
 var FacebookStore = require('stores/FacebookStore');
 var SpinnerStore = require('stores/SpinnerStore');
 
@@ -20,8 +23,8 @@ var App = React.createClass({
     componentDidMount: function() {
         SpinnerActions.show("Checking login status ...");
         this.loadFacebookSDK(function() {
-            FacebookActions.checkLoginStatus.triggerAsync().then(SpinnerActions.hide);
-        });
+            this.initWordsAfter(FacebookActions.checkLoginStatus);
+        }.bind(this));
     },
     render: function() {
         return (
@@ -41,7 +44,35 @@ var App = React.createClass({
     },
     loginWithFacebook: function() {
         SpinnerActions.show("Logging in...");
-        FacebookActions.login.triggerAsync().then(SpinnerActions.hide);
+        this.initWordsAfter(FacebookActions.login);
+    },
+    initWordsAfter: function(action) {
+        action.triggerAsync()
+            .then(function(facebook) {
+                return Q.Promise(function(resolve, reject) {
+                    if(facebook.isAuthenticated)
+                        resolve();
+                    else
+                        reject('Facebook', 'Not authenticated');
+            })
+            .then(function() {
+                SpinnerActions.show("Acquiring permission ...");
+                return AwsHelper.prepareDynamodb(facebook.userId, facebook.accessToken)
+            })
+            .then(function() {
+                SpinnerActions.show("Getting words ...");
+                return WordActions.fetchWords.triggerAsync()
+            })
+            .then(function(data){
+                console.log(data);
+            })
+            .catch(function(errType, msg) {
+                console.log(errType, msg);
+            })
+            .done(function() {
+                SpinnerActions.hide();
+            })
+        })
     },
     loadFacebookSDK: function(onFbAsyncInit) {
         window.fbAsyncInit = function() {

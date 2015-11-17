@@ -2,8 +2,6 @@ var Reflux = require('reflux');
 var _ = require('underscore');
 
 var FacebookActions = require('actions/FacebookActions');
-var WordActions = require('actions/WordActions');
-var AwsHelper = require('utils/AwsHelper');
 
 
 var data = {
@@ -23,18 +21,6 @@ function updateFromResponse(response) {
     FacebookStore.trigger(data);
 }
 
-function handleLogin(response) {
-    updateFromResponse(response);
-    if(data.isAuthenticated) {
-        AwsHelper.prepareDynamodb(data.userId, data.accessToken).then(function() {
-            WordActions.fetchWords();
-        }, function(err) {
-            alert("Sorry ...\nFailed to connect to server.");
-            console.error(err);
-        });
-    }
-}
-
 var FacebookStore = Reflux.createStore({
     listenables: [FacebookActions],
     getInitialState: function() {
@@ -44,18 +30,16 @@ var FacebookStore = Reflux.createStore({
         return _.clone(data);
     },
 
-
-
     onCheckLoginStatus: function() {
         FB.getLoginStatus(function(response) {
-            FacebookActions.checkLoginStatus.completed();
-            handleLogin(response);
+            updateFromResponse(response);
+            FacebookActions.checkLoginStatus.completed(data);
         }.bind(this));
     },
     onLogin: function() {
         FB.login(function(response) {
-            FacebookActions.login.completed();
-            handleLogin(response);
+            updateFromResponse(response);
+            FacebookActions.login.completed(data);
         }.bind(this));
     }
 });

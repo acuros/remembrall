@@ -22,7 +22,7 @@ var AwsHelper = {
                 },
                 function(err, data) {
                     if(err) {
-                        reject(err);
+                        reject('STS', err);
                     }
                     else {
                         var credential = makeAwsCredential(data.Credentials);
