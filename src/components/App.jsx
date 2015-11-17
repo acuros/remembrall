@@ -2,15 +2,23 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var FacebookActions = require('actions/FacebookActions');
-var FacebookStore = require('stores/FacebookStore');
+var SpinnerActions = require('actions/SpinnerActions');
 
+var FacebookStore = require('stores/FacebookStore');
+var SpinnerStore = require('stores/SpinnerStore');
+
+var Spinner = require('components/Spinner');
 require('styles/common');
 require('styles/index');
 
 var App = React.createClass({
-    mixins: [Reflux.connect(FacebookStore, 'facebook')],
+    mixins: [
+        Reflux.connect(FacebookStore, 'facebook'),
+        Reflux.connect(SpinnerStore, 'spinner')
+    ],
 
     componentDidMount: function() {
+        SpinnerActions.show("Loading ...");
         this.loadFacebookSDK(function() {
             FacebookActions.checkLoginStatus.triggerAsync();
         });
@@ -19,13 +27,17 @@ var App = React.createClass({
     },
     render: function() {
         return (
-            <div id="wrap">
+            <div id="wrap" ref="wrap">
                 <header>
                     {
                         this.state.facebook.isAuthenticated === false &&
                         <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>
                     }
                 </header>
+                {
+                    this.state.spinner.isVisible &&
+                    <Spinner message={this.state.spinner.message} />
+                }
             </div>
         );
     },
