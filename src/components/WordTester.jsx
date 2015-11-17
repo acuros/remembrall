@@ -4,7 +4,7 @@ var Reflux = require('reflux');
 var WordStore = require('stores/WordStore');
 var WordCard = require('components/WordCard');
 
-var Tester = React.createClass({
+var WordTester = React.createClass({
     getInitialState: function() {
         return {
             words: WordStore.getList(),
@@ -38,4 +38,4 @@ var Tester = React.createClass({
     }
 });
 
-module.exports = Tester;
+module.exports = WordTester;
