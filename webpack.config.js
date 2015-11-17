@@ -4,7 +4,7 @@ module.exports = {
     entry: {
         app: './src/app.jsx',
         vendor: [
-            'jquery', 'q', 'classnames',
+            'jquery', 'q', 'classnames', 'underscore',
             'react', 'react-dom', 'reflux', 'reflux-promise', 'react-router', 'react-loading',
             './src/utils/aws-sdk.js'
         ]
