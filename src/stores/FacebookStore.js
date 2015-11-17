@@ -1,4 +1,5 @@
 var Reflux = require('reflux');
+var _ = require('underscore');
 
 var FacebookActions = require('actions/FacebookActions');
 var WordActions = require('actions/WordActions');
@@ -37,8 +38,12 @@ function handleLogin(response) {
 var FacebookStore = Reflux.createStore({
     listenables: [FacebookActions],
     getInitialState: function() {
-        return data;
+        return _.clone(data);
     },
+    getState: function() {
+        return _.clone(data);
+    },
+
 
 
     onCheckLoginStatus: function() {
@@ -54,6 +59,8 @@ var FacebookStore = Reflux.createStore({
         }.bind(this));
     }
 });
+
+console.log(FacebookStore);
 
 
 module.exports = FacebookStore;
