@@ -8,7 +8,8 @@ var WordTester = React.createClass({
     getInitialState: function() {
         return {
             words: WordStore.getList(),
-            wordIndex: 0
+            wordIndex: 0,
+            corrects: 0
         }
     },
     mixins: [Reflux.listenTo(WordStore, "onWordListChange")],
@@ -24,22 +25,29 @@ var WordTester = React.createClass({
                     (
                         this.state.wordIndex < this.state.words.length &&
                         <WordCard word={this.state.words[this.state.wordIndex]} onMark={this.markCurrentWord}/> ||
-                        "Finished"
+                        this.createScoreBoard()
                     )
                 }
             </section>
         )
     },
 
+    createScoreBoard: function() {
+        return (
+            <span className="score">Your score is {this.state.corrects} / {this.state.words.length}</span>
+        );
+    },
     markCurrentWord: function(isCorrect) {
-        console.log(isCorrect);
         this.setState({
-            wordIndex: this.state.wordIndex + 1
+            wordIndex: this.state.wordIndex + 1,
+            corrects: this.state.corrects + (isCorrect ? 1 : 0)
         });
     },
     onWordListChange: function(words) {
         this.setState({
-            words: words
+            words: words,
+            wordIndex: 0,
+            corrects: 0
         });
     }
 });
