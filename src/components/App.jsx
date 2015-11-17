@@ -20,7 +20,7 @@ var App = React.createClass({
     mixins: [
         Reflux.connect(FacebookStore, 'facebook'),
         Reflux.connect(SpinnerStore, 'spinner'),
-        Reflux.connect(WordStore, 'words'),
+        Reflux.connect(WordStore, 'words')
     ],
 
     componentDidMount: function() {
