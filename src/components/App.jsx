@@ -34,23 +34,27 @@ var App = React.createClass({
                 <header>
                     {
                         this.state.facebook.isAuthenticated === false &&
-                        <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button> ||
+                        <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>
+                    }
+                    {
+                        this.state.facebook.isAuthenticated === true &&
                         <nav>
                             <Link to="/">Test</Link> / <Link to="/manage">Manage</Link>
                         </nav>
                     }
                 </header>
                 {
-                    this.props.children &&
-                    <div id="children-wrap">
-                        {this.props.children}
-                    </div> ||
-                    <WordTester />
+                    this.state.facebook.isAuthenticated === true &&
+                    (
+                        this.props.children &&
+                        <div id="children-wrap">{this.props.children}</div> ||
+                        <WordTester />
+                    )
                 }
                 {
                     this.state.spinner.isVisible &&
                     <Spinner message={this.state.spinner.message} />
-                    }
+                }
             </div>
         );
     },
