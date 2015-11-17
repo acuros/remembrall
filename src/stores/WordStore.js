@@ -37,6 +37,21 @@ var WordStore = Reflux.createStore({
             words = data.Items.map(function(item) {return Word.fromItem(item)});
             WordStore.trigger(words);
         });
+    },
+    onUploadWord: function(word) {
+        AwsHelper.dynamodb.putItem({
+            TableName: TABLE_NAME,
+            Item: word.toItemOfUser(FacebookStore.getState().userId)
+        },
+        function(err, data) {
+            if(err) {
+                WordActions.uploadWord.failed('Dynamodb', err);
+                return;
+            }
+            WordActions.uploadWord.completed();
+            words.push(word);
+            WordStore.trigger(words);
+        });
     }
 });
 
