@@ -20,10 +20,10 @@ var App = React.createClass({
     componentDidMount: function() {
         SpinnerActions.show("Loading ...");
         this.loadFacebookSDK(function() {
-            FacebookActions.checkLoginStatus.triggerAsync();
+            FacebookActions.checkLoginStatus.triggerAsync().then(function() {
+                SpinnerActions.hide();
+            });
         });
-    },
-    componentWillUnmount: function() {
     },
     render: function() {
         return (
@@ -42,12 +42,15 @@ var App = React.createClass({
         );
     },
     loginWithFacebook: function() {
+        SpinnerActions.show("Loading ...");
         FacebookActions.login.triggerAsync().then(function() {
-            alert('Success');
-        })
+            SpinnerActions.hide();
+        });
     },
     loadFacebookSDK: function(onFbAsyncInit) {
-        window.fbAsyncInit = onFbAsyncInit();
+        window.fbAsyncInit = function() {
+            onFbAsyncInit();
+        };
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;

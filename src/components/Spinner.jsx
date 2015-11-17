@@ -1,5 +1,5 @@
 var React = require('react');
-var Spinkit = require('react-spinkit');
+var Loading = require('react-loading');
 
 require('styles/spinner');
 var Spinner = React.createClass({
@@ -9,7 +9,7 @@ var Spinner = React.createClass({
     render: function() {
         return (
             <div id="spinner-wrap">
-                <Spinkit spinnerName="three-bounce" />
+                <Loading type="spokes" color="#a0a0a0" width="80" height="80"/>
                 {
                     this.props.message &&
                     <span id="spinner-message">{ this.props.message }</span>

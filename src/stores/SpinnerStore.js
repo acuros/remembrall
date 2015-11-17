@@ -19,7 +19,7 @@ module.exports = Reflux.createStore({
             isVisible: true,
             message: message
         };
-        this.trigger(options)
+        this.trigger(options);
     },
     onHide: function() {
         options.isVisible = false;
