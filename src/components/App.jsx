@@ -2,13 +2,15 @@ var React = require('react');
 var Reflux = require('reflux');
 var Q = require('q');
 
-var AwsHelper = require('utils/AwsHelper');
 var WordActions = require('actions/WordActions');
 var FacebookActions = require('actions/FacebookActions');
 var SpinnerActions = require('actions/SpinnerActions');
+
 var WordStore = require('stores/WordStore');
 var FacebookStore = require('stores/FacebookStore');
 var SpinnerStore = require('stores/SpinnerStore');
+
+var AwsHelper = require('utils/AwsHelper');
 
 var Spinner = require('components/Spinner');
 require('styles/common');
