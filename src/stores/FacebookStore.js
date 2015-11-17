@@ -16,8 +16,10 @@ var FacebookStore = Reflux.createStore({
     },
     updateFromResponse: function(response) {
         fbData.status = response.status;
-        fbData.userId = response.authResponse.userID;
         fbData.isAuthenticated = fbData.status == 'connected';
+        if(fbData.isAuthenticated) {
+            fbData.userId = response.authResponse.userID;
+        }
         this.trigger(fbData);
     },
 
