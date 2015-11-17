@@ -25,7 +25,7 @@ var WordTester = React.createClass({
 
     getInitialState: function() {
         return {
-            words: [],
+            words: this.props.words,
             wordIndex: 0,
             corrects: 0
         }
