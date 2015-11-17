@@ -16,7 +16,9 @@ var WordTester = React.createClass({
     render: function() {
         return (
             <section id="test-section">
-                <h1>Test words!</h1>
+                <header>
+                    {this.state.wordIndex } / {this.state.words.length}
+                </header>
                 {
                     this.state.words.length > 0 &&
                     <WordCard word={this.state.words[this.state.wordIndex]} onMark={this.markCurrentWord}/>
