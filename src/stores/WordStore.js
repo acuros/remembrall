@@ -6,9 +6,23 @@ var AwsHelper = require('utils/AwsHelper');
 
 
 var TABLE_NAME = 'Word';
+var words = [];
+
+
+var Word = function(name, meaning) {
+    this.name = name;
+    this.meaning = meaning;
+};
+
+Word.fromItem = function(item) {
+    return new Word(item['word']['S'], item['meaning']['S']);
+};
 
 var WordStore = Reflux.createStore({
     listenables: [WordActions],
+    getInitialState: function() {
+        return []
+    },
 
     onFetchWords: function() {
         AwsHelper.dynamodb.query({
@@ -22,10 +36,11 @@ var WordStore = Reflux.createStore({
         }, function(err, data) {
             if(err) {
                 WordActions.fetchWords.failed('Dynamodb', err);
+                return;
             }
-            else {
-                WordActions.fetchWords.completed(data);
-            }
+            WordActions.fetchWords.completed();
+            words = data.Items.map(function(item) {return Word.fromItem(item)});
+            WordStore.trigger(words);
         });
     }
 });

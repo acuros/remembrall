@@ -17,7 +17,8 @@ require('styles/index');
 var App = React.createClass({
     mixins: [
         Reflux.connect(FacebookStore, 'facebook'),
-        Reflux.connect(SpinnerStore, 'spinner')
+        Reflux.connect(SpinnerStore, 'spinner'),
+        Reflux.connect(WordStore, 'words'),
     ],
 
     componentDidMount: function() {
@@ -38,6 +39,11 @@ var App = React.createClass({
                 {
                     this.state.spinner.isVisible &&
                     <Spinner message={this.state.spinner.message} />
+                }
+                {
+                    this.state.words.map(function(word) {
+                        return word.name + " "
+                    })
                 }
             </div>
         );
@@ -62,9 +68,6 @@ var App = React.createClass({
             .then(function() {
                 SpinnerActions.show("Getting words ...");
                 return WordActions.fetchWords.triggerAsync()
-            })
-            .then(function(data){
-                console.log(data);
             })
             .catch(function(errType, msg) {
                 console.log(errType, msg);
