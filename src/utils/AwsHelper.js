@@ -9,7 +9,7 @@ function makeAwsCredential(credentialData) {
 }
 
 
-var AwsWrap = {
+var AwsHelper = {
     dynamodb: null,
     prepareDynamodb: function(userId, accessToken) {
         return Q.Promise(function(resolve, reject) {
@@ -26,7 +26,7 @@ var AwsWrap = {
                     }
                     else {
                         var credential = makeAwsCredential(data.Credentials);
-                        AwsWrap.dynamodb = new AWS.DynamoDB({
+                        AwsHelper.dynamodb = new AWS.DynamoDB({
                             credentials: credential,
                             region: 'ap-northeast-1'
                         });
@@ -38,4 +38,4 @@ var AwsWrap = {
     }
 };
 
-module.exports = AwsWrap;
+module.exports = AwsHelper;

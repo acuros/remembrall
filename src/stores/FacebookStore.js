@@ -1,7 +1,7 @@
 var Reflux = require('reflux');
 
 var FacebookActions = require('actions/FacebookActions');
-var AWS = require('utils/aws');
+var AwsHelper = require('utils/AwsHelper');
 
 
 var data = {
@@ -24,8 +24,8 @@ function updateFromResponse(response) {
 function handleLogin(response) {
     updateFromResponse(response);
     if(data.isAuthenticated) {
-        AWS.prepareDynamodb(data.userId, data.accessToken).then(function() {
-            console.log(AWS, AWS.dynamodb);
+        AwsHelper.prepareDynamodb(data.userId, data.accessToken).then(function() {
+            console.log(AwsHelper, AwsHelper.dynamodb);
         }, function(err) {
             console.log(err);
         });
