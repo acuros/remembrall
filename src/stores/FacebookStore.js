@@ -1,6 +1,7 @@
 var Reflux = require('reflux');
 
 var FacebookActions = require('actions/FacebookActions');
+var WordActions = require('actions/WordActions');
 var AwsHelper = require('utils/AwsHelper');
 
 
@@ -25,9 +26,10 @@ function handleLogin(response) {
     updateFromResponse(response);
     if(data.isAuthenticated) {
         AwsHelper.prepareDynamodb(data.userId, data.accessToken).then(function() {
-            console.log(AwsHelper, AwsHelper.dynamodb);
+            WordActions.fetchWords();
         }, function(err) {
-            console.log(err);
+            alert("Sorry ...\nFailed to connect to server.");
+            console.error(err);
         });
     }
 }
