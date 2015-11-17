@@ -4,10 +4,25 @@ var Reflux = require('reflux');
 var WordStore = require('stores/WordStore');
 var WordCard = require('components/WordCard');
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 var WordTester = React.createClass({
     getInitialState: function() {
         return {
-            words: WordStore.getList(),
+            words: shuffle(WordStore.getList()),
             wordIndex: 0,
             corrects: 0
         }
@@ -34,7 +49,9 @@ var WordTester = React.createClass({
 
     createScoreBoard: function() {
         return (
-            <span className="score">Your score is {this.state.corrects} / {this.state.words.length}</span>
+            <div id="score-board">
+                <span className="score">Your score is {this.state.corrects} / {this.state.words.length}</span>
+            </div>
         );
     },
     markCurrentWord: function(isCorrect) {
@@ -45,7 +62,7 @@ var WordTester = React.createClass({
     },
     onWordListChange: function(words) {
         this.setState({
-            words: words,
+            words: shuffle(words),
             wordIndex: 0,
             corrects: 0
         });
