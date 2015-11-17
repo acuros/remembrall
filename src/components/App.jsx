@@ -13,6 +13,7 @@ var SpinnerStore = require('stores/SpinnerStore');
 var AwsHelper = require('utils/AwsHelper');
 
 var Spinner = require('components/Spinner');
+var WordTester = require('components/WordTester');
 require('styles/style');
 
 var App = React.createClass({
@@ -35,13 +36,17 @@ var App = React.createClass({
                         this.state.facebook.isAuthenticated === false &&
                         <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button> ||
                         <nav>
-                            <Link to="/test">Test</Link> / <Link to="/manage">Manage</Link>
+                            <Link to="/">Test</Link> / <Link to="/manage">Manage</Link>
                         </nav>
                     }
                 </header>
-                <div id="children-wrap">
-                    {this.props.children}
-                </div>
+                {
+                    this.props.children &&
+                    <div id="children-wrap">
+                        {this.props.children}
+                    </div> ||
+                    <WordTester />
+                }
                 {
                     this.state.spinner.isVisible &&
                     <Spinner message={this.state.spinner.message} />
@@ -69,9 +74,6 @@ var App = React.createClass({
             .then(function() {
                 SpinnerActions.show("Getting words ...");
                 return WordActions.fetchWords.triggerAsync()
-            })
-            .then(function() {
-                window.location.hash = "/test";
             })
             .catch(function(errType, msg) {
                 console.log(errType, msg);

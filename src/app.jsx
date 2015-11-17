@@ -19,7 +19,6 @@ var Manager = require('components/WordManager');
 ReactDOM.render((
     <Router>
         <Route path="/" component={App}>
-            <Route path="test" component={Tester} />
             <Route path="manage" component={Manager} />
         </Route>
     </Router>
