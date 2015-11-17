@@ -2,91 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.17.min.js"></script>
-    <script src="wordtester.js"></script>
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '1647663812151516',
-                xfbml      : true,
-                version    : 'v2.5'
-            });
-
-            FB.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                    WordStore.init(response.authResponse, function() {
-                        WordStore.fetchWords($.proxy(ViewManager.start, ViewManager));
-                    });
-                } else if (response.status === 'not_authorized') {
-                    $('#status').html('Please log into this app.');
-                    $('#login-button').show()
-                } else {
-                    $('#status').html('Please log into Facebook.');
-                    $('#login-button').show()
-                }
-            });
-        };
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-        $(function() {
-            ViewManager.init();
-        })
-    </script>
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <title>Title</title>
+    <script src="dist/vendor.bundle.js"></script>
 </head>
 <body>
-<div id="wrap">
-    <div id="status">
-        Loading ...
-    </div>
-    <div id="login-button-wrap">
-        <fb:login-button scope="public_profile,email" id="login-button" onlogin="checkLoginState();">
-        </fb:login-button>
-    </div>
-    <header>
-        <a href="" id="test-menu">Test</a>
-        <a href="" id="upload-menu">Add</a>
-    </header>
-    <div id="main">
-        <section id="test-section" class="menu-section">
-            <span id="progress">
-                <span id="current-index"></span> / <span id="number-of-words"></span>
-            </span>
-            <span id="word"></span>
-            <span id="meaning"></span>
-            <button id="show-meaning">Show Meaning</button>
-            <div id="check-button-wrap">
-                <button id="correct" class="check-button">O</button><button id="wrong" class="check-button">X</button>
-            </div>
-        </section>
-        <section id="score-section">
-            <span id="score-description">Your score is <span id="score"></span></span><br>
-            <button id="start-next-cycle">Start next cycle</button>
-        </section>
-        <section id="upload-section" class="menu-section">
-            <form id="upload-form">
-                <fieldset>
-                    <legend>Add a new word</legend>
-                    <dl>
-                        <dt><label for="new-word">Word</label></dt>
-                        <dd><input type="text" id="new-word"></dd>
-                        <dt><label for="new-word-meaning">Meaning</label></dt>
-                        <dd><input type="text" id="new-word-meaning"></dd>
-                    </dl>
-                    <input type="submit" value="Save">
-                </fieldset>
-            </form>
-        </section>
-    </div>
-</div>
+    <div id="react-outer-wrap"></div>
+    <script src="dist/app.js"></script>
 </body>
 </html>
