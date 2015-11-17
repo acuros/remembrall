@@ -1,5 +1,6 @@
 var Reflux = require('reflux');
 
+var Word = require('stores/Word');
 var FacebookStore = require('stores/FacebookStore');
 var WordActions = require('actions/WordActions');
 var AwsHelper = require('utils/AwsHelper');
@@ -8,15 +9,6 @@ var AwsHelper = require('utils/AwsHelper');
 var TABLE_NAME = 'Word';
 var words = [];
 
-
-var Word = function(name, meaning) {
-    this.name = name;
-    this.meaning = meaning;
-};
-
-Word.fromItem = function(item) {
-    return new Word(item['word']['S'], item['meaning']['S']);
-};
 
 var WordStore = Reflux.createStore({
     listenables: [WordActions],
