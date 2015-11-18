@@ -6,7 +6,7 @@ If you want to deploy this service on your own AWS, follow the steps below.
 1. Clone this repository on your local machine and install all requirements(nodejs, webpack ...)
 2. Make your facebook app in https://developers.facebook.com
 3. In AWS DynamoDB, create table named "Word". Hash key is "user" as String, range key is "word" as String.
-4. In AWS IAM, create new role. You have to choice Identity Provider Access -> Grant access to web identity providers for role type.
+4. In AWS IAM, create new role. You have to choose Identity Provider Access -> Grant access to web identity providers for role type.
 4. Choose Identity Provider as Facebook and fill the application id field with App ID you made in STEP 2.
 5. After you create role, you have to add policy. I prefer Inline policy for it. The example is at the bottom of this page.
 6. Set your APP ID and Role ARN in webpack.config.js
