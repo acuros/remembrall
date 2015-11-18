@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.less'],
-        root: __dirname + '\\src'
+        root: path.join(__dirname, 'src')
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
