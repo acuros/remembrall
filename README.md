@@ -4,9 +4,9 @@ Remembrall is a simple vocabulary studying service made for example of serverles
 If you want to deploy this service on your own AWS, follow the steps below.
 
 1. Clone this repository on your local machine and install all requirements(nodejs, webpack ...)
-2. Configure boto
-3. Make your facebook app in https://developers.facebook.com
-4. Run setup/setup.py
+2. Make your facebook app in https://developers.facebook.com
+3. Configure boto
+4. Run setup/setup.py (Written in python 2.7)
 5. Webpack the repository
 6. Setup your s3. http://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-walkthrough.html
 7. Upload index.html and dist directory on your s3.
