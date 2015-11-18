@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:DeleteItem",
+                "dynamodb:PutItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+            ],
+            "Condition": {
+                "ForAllValues:StringEquals": {
+                    "dynamodb:LeadingKeys": [
+                        "${graph.facebook.com:id}"
+                    ]
+                }
+            }
+        }
+    ]
+}

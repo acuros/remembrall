@@ -20,8 +20,8 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new webpack.DefinePlugin({
-            FB_APP_ID: JSON.stringify('193784704288362'),
-            ROLE_ARN: JSON.stringify('arn:aws:iam::617665285615:role/Remembrall')
+            FB_APP_ID: JSON.stringify('__FB_APP_ID__'),
+            ROLE_ARN: JSON.stringify('__ROLE_ARN__')
         })
     ],
     module: {

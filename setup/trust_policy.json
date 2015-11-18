@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17", 
+  "Statement": [
+    {
+      "Action": "sts:AssumeRoleWithWebIdentity", 
+      "Effect": "Allow", 
+      "Condition": {
+        "StringEquals": {
+          "graph.facebook.com:app_id": ""
+        }
+      }, 
+      "Principal": {
+        "Federated": "graph.facebook.com"
+      }
+    }
+  ]
+}
