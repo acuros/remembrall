@@ -1,5 +1,5 @@
 # Remembrall
-Remembrall is simple vocabulary studying service for serverless architecture example with AWS. Made with React + Reflux + AWS JS SDK(STS using facebook authentication + DynamoDB) and deployed on S3.
+Remembrall is a simple vocabulary studying service made for example of serverless architecture with AWS. Made with React + Reflux + AWS JS SDK(STS using facebook authentication + DynamoDB) and deployed on S3.
 
 If you want to deploy this service on your own AWS, follow the steps below.
 
