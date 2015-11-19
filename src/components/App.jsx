@@ -34,6 +34,7 @@ var App = React.createClass({
         return (
             <div id="wrap" ref="wrap">
                 <header>
+					<h1>Remembrall - vocabulary studying helper</h1>
                     {
                         this.state.facebook.isAuthenticated === false &&
                         <button id="facebook-login" onClick={this.loginWithFacebook}>Log In with Facebook</button>

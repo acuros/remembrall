@@ -13,7 +13,6 @@ var Route = ReactRouter.Router;
 
 
 var App =  require('components/App');
-var Tester = require('components/WordTester');
 var Manager = require('components/WordManager');
 
 ReactDOM.render((
