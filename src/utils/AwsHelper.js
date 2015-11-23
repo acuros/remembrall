@@ -5,6 +5,7 @@ var FacebookStore = require('stores/FacebookStore');
 
 var dynamodb = null;
 var WORD_TABLE_NAME = 'Word';
+var WORD_LIST_TABLE_NAME = 'WordList';
 
 
 var AwsHelper = {
@@ -47,6 +48,14 @@ var AwsHelper = {
       TableName: WORD_TABLE_NAME,
       Item: word.toItemOfUser(FacebookStore.getState().userId)
     }, callback);
+  },
+
+  fetchWordLists: function(callback) {
+    callback = callback || function(){};
+    dynamodb.query({
+      TableName: WORD_LIST_TABLE_NAME,
+      KeyConditions: makeUserKeyCondition()
+    });
   }
 };
 
