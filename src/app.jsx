@@ -13,7 +13,7 @@ var Route = ReactRouter.Router;
 
 
 var App =  require('components/App');
-var Manager = require('components/Manager');
+var Manager = require('components/WordManager');
 
 ReactDOM.render((
     <Router>
