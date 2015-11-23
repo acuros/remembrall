@@ -84,7 +84,7 @@ var App = React.createClass({
       })
       .done(function () {
         SpinnerActions.hide();
-        location.hash = "#/test/start/";
+        that.props.history.replaceState(null, '/test/start/');
       })
   },
   loadFacebookSDK: function (onFbAsyncInit) {

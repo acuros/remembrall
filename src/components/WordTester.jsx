@@ -1,56 +1,54 @@
 var React = require('react');
 var Reflux = require('reflux');
+var _ = require('underscore');
 
+var SpinnerActions = require('actions/SpinnerActions');
+var WordActions = require('actions/WordActions');
+
+var WordStore = require('stores/WordStore');
 var WordCard = require('components/WordCard');
-var WordListStore = require('stores/WordListStore');
 
 
 var WordTester = React.createClass({
-  mixins: [Reflux.connect(WordListStore, 'wordLists')],
-
+  mixins: [Reflux.connect(WordStore, 'words')],
+  thisCycleWords: [],
   nextCycleWords: [],
 
   getInitialState: function () {
     return {
-      words: [],
       wordIndex: 0,
       corrects: 0
     }
   },
 
-  render: function () {
-    return this.createWordList();
-  },
+  componentDidMount: function() {
+    var that = this;
+    var wordLists = this.props.location.query.wordLists.split(',');
+    SpinnerActions.show('Preparing test ...');
 
-  createWordList: function () {
-    var lis = this.state.wordLists.map(function (wordList, index) {
-      var liKey = "wordlist-" + index + "-li";
-      var checkboxId = "wordlist-" + index + "-checkbox";
-      return (
-        <li key={liKey}>
-          <input type="checkbox" name="wordlist" id={checkboxId}/>
-          <label htmlFor={checkboxId}>{wordList}</label>
-        </li>
-      );
+    WordActions.fetchWords.triggerAsync(wordLists).then(function(words) {
+      SpinnerActions.hide();
+      var newCycleWords = [];
+      for(var key in words) {
+        _.extend(newCycleWords, words[key]);
+      }
+      that.startNewCycle(newCycleWords);
     });
-    return (
-      <form method="get">
-        <ul>{lis}</ul>
-        <button>Start test</button>
-      </form>
-    );
   },
-  createTestBoard: function () {
+  render: function () {
+    if(this.thisCycleWords.length == 0) {
+      return <div></div>
+    }
     return (
       <section id="test-section">
         <header>
-          {Math.min(this.state.wordIndex + 1, this.state.words.length)} / {this.state.words.length}
+          {Math.min(this.state.wordIndex + 1, this.thisCycleWords.length)} / {this.thisCycleWords.length}
         </header>
         {
-          this.state.words.length > 0 &&
+          this.thisCycleWords.length > 0 &&
           (
-            this.state.wordIndex < this.state.words.length &&
-            <WordCard word={this.state.words[this.state.wordIndex]} onMark={this.markCurrentWord}/> ||
+            this.state.wordIndex < this.thisCycleWords.length &&
+            <WordCard word={this.thisCycleWords[this.state.wordIndex]} onMark={this.markCurrentWord}/> ||
             this.createScoreBoard()
           )
         }
@@ -60,7 +58,7 @@ var WordTester = React.createClass({
   createScoreBoard: function () {
     return (
       <div id="score-board">
-        <span className="score">Your score is {this.state.corrects} / {this.state.words.length}</span>
+        <span className="score">Your score is {this.state.corrects} / {this.thisCycleWords.length}</span>
 
         <div id="actions">
           <button className="finish-action" onClick={this.continueWithTheWrongs}>Continue</button>
@@ -71,7 +69,7 @@ var WordTester = React.createClass({
   },
   markCurrentWord: function (isCorrect) {
     if (!isCorrect) {
-      this.nextCycleWords.push(this.state.words[this.state.wordIndex]);
+      this.nextCycleWords.push(this.thisCycleWords[this.state.wordIndex]);
     }
     this.setState({
       wordIndex: this.state.wordIndex + 1,
@@ -80,14 +78,14 @@ var WordTester = React.createClass({
   },
   startNewCycle: function (words) {
     this.nextCycleWords = [];
+    this.thisCycleWords = shuffle(words);
     this.setState({
-      words: shuffle(words),
       wordIndex: 0,
       corrects: 0
     });
   },
   restart: function () {
-    this.startNewCycle(this.props.words);
+    this.startNewCycle(this.state.words);
   },
   continueWithTheWrongs: function () {
     this.startNewCycle(this.nextCycleWords);

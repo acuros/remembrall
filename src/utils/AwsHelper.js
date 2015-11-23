@@ -35,8 +35,15 @@ var AwsHelper = {
     });
   },
 
-  fetchWords: function(callback) {
+  fetchWords: function(wordList, callback) {
     callback = callback || function(){};
+    wordList = wordList == 'Default' ? '' : wordList;
+
+    var keyCondition = makeUserKeyCondition();
+    keyCondition['wordList'] = {
+      ComparisonOperator: 'Eq',
+      AttributeValueList: [{S: wordList}]
+    };
     dynamodb.query({
       TableName: WORD_TABLE_NAME,
       KeyConditions: makeUserKeyCondition()
