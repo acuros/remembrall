@@ -46,6 +46,7 @@ var App = React.createClass({
         </header>
         {
           this.state.facebook.isAuthenticated === true &&
+          this.state.isDbPrepared === true &&
           this.props.children &&
           <div id="children-wrap">{this.props.children}</div>
         }
@@ -61,6 +62,7 @@ var App = React.createClass({
     this.initWordsAfter(FacebookActions.login);
   },
   initWordsAfter: function (action) {
+    var that = this;
     action.triggerAsync()
       .then(function (facebook) {
         return Q.Promise(function (resolve, reject) {
@@ -73,16 +75,15 @@ var App = React.createClass({
         SpinnerActions.show("Acquiring permission ...");
         return AwsHelper.prepareDynamodb(facebook.userId, facebook.accessToken)
       })
-      .then(function () {
-        SpinnerActions.show("Getting words ...");
-        return WordListActions.fetchWordLists.triggerAsync()
+      .then(function() {
+        that.setState({isDbPrepared: true});
       })
       .catch(function (errType, msg) {
         console.log(errType, msg);
       })
       .done(function () {
         SpinnerActions.hide();
-        location.hash = "#/test";
+        location.hash = "#/test/start/";
       })
     })
   },

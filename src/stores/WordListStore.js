@@ -5,7 +5,7 @@ var AwsHelper = require('utils/AwsHelper');
 
 
 var TABLE_NAME = 'WordList';
-var wordLists = ['Default'];
+var wordLists = [];
 
 
 var WordListStore = Reflux.createStore({
@@ -31,6 +31,9 @@ var WordListStore = Reflux.createStore({
       wordLists.concat(data.Items.map(function(item) {
         return item['name']['S'];
       }));
+      if(wordLists.length == 0) {
+        wordLists.push('Default');
+      }
       WordListStore.trigger(wordLists);
     });
   }
