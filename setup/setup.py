@@ -44,6 +44,18 @@ def create_table(region):
         },
         connection=connection
     )
+    Table.create(
+        'WordList',
+        schema=[
+            HashKey('user'),
+            RangeKey('name')
+        ],
+        throughput={
+            'read': 1,
+            'write': 1
+        },
+        connection=connection
+    )
 
 
 def create_policies(region, fb_app_id):
@@ -57,7 +69,9 @@ def create_policies(region, fb_app_id):
         permission_policy = json.load(f)
 
     permission_policy['Statement'][0]['Resource'] = [
-            u'arn:aws:dynamodb:{}:{}:table/Word'.format(region, account_id)]
+        u'arn:aws:dynamodb:{}:{}:table/Word'.format(region, account_id),
+        u'arn:aws:dynamodb:{}:{}:table/WordList'.format(region, account_id)
+    ]
 
 
     return trust_policy, permission_policy
