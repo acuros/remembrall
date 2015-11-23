@@ -65,13 +65,14 @@ var App = React.createClass({
     var that = this;
     action.triggerAsync()
       .then(function (facebook) {
-        return Q.Promise(function (resolve, reject) {
-          if (facebook.isAuthenticated)
-            resolve();
-          else
-            reject('Facebook', 'Not authenticated');
-      })
-      .then(function () {
+        return Q.Promise(
+          function (resolve, reject) {
+            if (facebook.isAuthenticated)
+              resolve(facebook);
+            else
+              reject('Facebook', 'Not authenticated');
+      })})
+      .then(function (facebook) {
         SpinnerActions.show("Acquiring permission ...");
         return AwsHelper.prepareDynamodb(facebook.userId, facebook.accessToken)
       })
@@ -85,7 +86,6 @@ var App = React.createClass({
         SpinnerActions.hide();
         location.hash = "#/test/start/";
       })
-    })
   },
   loadFacebookSDK: function (onFbAsyncInit) {
     window.fbAsyncInit = function () {
