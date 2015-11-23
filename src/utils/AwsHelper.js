@@ -55,7 +55,7 @@ var AwsHelper = {
     dynamodb.query({
       TableName: WORD_LIST_TABLE_NAME,
       KeyConditions: makeUserKeyCondition()
-    });
+    }, callback);
   }
 };
 
