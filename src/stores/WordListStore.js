@@ -8,7 +8,7 @@ var TABLE_NAME = 'WordList';
 var wordLists = ['Default'];
 
 
-var WordList = Reflux.createStore({
+var WordListStore = Reflux.createStore({
   listenables: [WordListActions],
   getInitialState: function() {
     return []
@@ -28,12 +28,13 @@ var WordList = Reflux.createStore({
       }
 
       WordListActions.fetchWordLists.completed();
-      wordLists = data.Items.map(function(item) {
+      wordLists.concat(data.Items.map(function(item) {
         return item['name']['S'];
-      })
+      }));
+      WordListStore.trigger(wordLists);
     });
   }
 });
 
 
-module.exports = WordList;
+module.exports = WordListStore;
