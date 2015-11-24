@@ -1,5 +1,6 @@
 var Reflux = require('reflux');
 var _ = require('underscore');
+var Q = require('q');
 
 var WordListActions = require('actions/WordListActions');
 var AwsHelper = require('utils/AwsHelper');
@@ -27,7 +28,7 @@ var WordListStore = Reflux.createStore({
 
       wordLists.push(wordList);
       WordListActions.addWordList.completed();
-      WordListStore.trigger(wordList);
+      WordListStore.trigger(wordLists);
     });
   },
 
@@ -44,9 +45,20 @@ var WordListStore = Reflux.createStore({
       _.extend(wordLists, data.Items.map(function(item) {
         return item['name']['S'];
       }));
-      wordLists.push('Default');
-      WordListActions.fetchWordLists.completed();
-      WordListStore.trigger(wordLists);
+
+      Q.promise(function(resolve) {
+          if(!_.contains(wordLists, "Default")) {
+            WordListActions.addWordList.triggerAsync("Default").then(function() {
+              resolve();
+            })
+          }
+          else
+            resolve();
+        })
+        .then(function() {
+          WordListActions.fetchWordLists.completed();
+          WordListStore.trigger(wordLists);
+        });
     });
   }
 });
