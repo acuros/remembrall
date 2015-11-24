@@ -42,7 +42,7 @@ var App = React.createClass({
           {
             this.state.facebook.isAuthenticated === true &&
             <nav>
-              <Link to="/">Test</Link> / <Link to="/manage">Manage</Link>
+              <Link to="/test/start/">Test</Link> / <Link to="/manage/">Manage</Link>
             </nav>
           }
         </header>
