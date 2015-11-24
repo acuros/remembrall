@@ -42,7 +42,7 @@ var WordListStore = Reflux.createStore({
         return;
       }
 
-      _.extend(wordLists, wordLists_);
+      wordLists = _.union(wordLists, wordLists_);
 
       Q.promise(function(resolve) {
           if(!_.contains(wordLists, "Default")) {
