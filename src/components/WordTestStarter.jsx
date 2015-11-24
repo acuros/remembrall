@@ -40,7 +40,7 @@ var WordTestStarter = React.createClass({
     var wordLists = $form.find('input[type="checkbox"]:checked').map(function(idx, obj){
       return $(obj).val();
     }).get();
-    this.props.history.replaceState(null, '/test/?wordLists='+wordLists.join(','));
+    this.props.history.pushState(null, '/test/?wordLists='+wordLists.join(','));
   }
 });
 

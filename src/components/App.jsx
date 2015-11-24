@@ -97,7 +97,7 @@ var App = React.createClass({
         var storedWords = WordStore.getInitialState();
         var wordsNum = _.reduce(storedWords, function(sum, words) { return sum + words.length }, 0);
         if(wordsNum == 0) {
-          that.props.history.replaceState(null, '/manage/');
+          that.props.history.pushState(null, '/manage/');
         }
         else {
           that.props.history.replaceState(null, '/test/start/');
