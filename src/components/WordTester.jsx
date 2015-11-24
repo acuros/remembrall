@@ -26,14 +26,12 @@ var WordTester = React.createClass({
     var wordLists = this.props.location.query.wordLists.split(',');
     SpinnerActions.show('Preparing test ...');
 
-    WordActions.fetchWords.triggerAsync(wordLists).then(function(words) {
+    WordActions.fetchWords.triggerAsync(wordLists).then(function(allWords) {
       SpinnerActions.hide();
-      var newCycleWords = [];
-      for(var key in words) {
-        if(!_.contains(wordLists, key)) continue;
-        _.extend(newCycleWords, words[key]);
-      }
-      that.startNewCycle(newCycleWords);
+      var words = _.map(wordLists, function(wordList) {
+        return allWords[wordList];
+      });
+      that.startNewCycle(_.flatten(words));
     });
   },
   render: function () {
