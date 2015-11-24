@@ -49,11 +49,13 @@ var AwsHelper = {
       KeyConditions: makeUserKeyCondition()
     }, callback);
   },
-  putWord: function(word, callback) {
+  putWord: function(wordList, word, callback) {
     callback = callback || function(){};
+    wordList = wordList == 'Default' ? '' : wordList;
+
     dynamodb.putItem({
       TableName: WORD_TABLE_NAME,
-      Item: word.toItemOfUser(FacebookStore.getState().userId)
+      Item: word.toItemInWordListOfUser(wordList, FacebookStore.getState().userId)
     }, callback);
   },
 

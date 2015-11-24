@@ -70,7 +70,7 @@ var WordManager = React.createClass({
     var meaningField = this.refs.meaning;
     var word = new Word(nameField.value, meaningField.value);
 
-    WordActions.uploadWord(word)
+    WordActions.uploadWord.triggerAsync(this.state.wordList, word)
       .then(function () {
         nameField.value = '';
         meaningField.value = '';

@@ -7,8 +7,11 @@ Word.fromItem = function(item) {
     return new Word(item['word']['S'], item['meaning']['S']);
 };
 
-Word.prototype.toItemOfUser = function(userId) {
+Word.prototype.toItemInWordListOfUser = function(wordList, userId) {
     return {
+        wordList: {
+            S: wordList
+        },
         user: {
             S: userId
         },

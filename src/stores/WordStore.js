@@ -36,14 +36,19 @@ var WordStore = Reflux.createStore({
       });
     }
   },
-  onUploadWord: function (word) {
-    AwsHelper.putWord(word, function (err, data) {
+  onUploadWord: function (wordList, word) {
+    AwsHelper.putWord(wordList, word, function (err, data) {
       if (err) {
         WordActions.uploadWord.failed('Dynamodb', err);
         return;
       }
       WordActions.uploadWord.completed();
-      words.push(word);
+      if(words.hasOwnProperty(wordList)) {
+        words[wordList].push(word);
+      }
+      else {
+        words[wordList] = [word];
+      }
       WordStore.trigger(words);
     });
   }
