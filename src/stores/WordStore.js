@@ -11,7 +11,7 @@ var words = {};
 var WordStore = Reflux.createStore({
   listenables: [WordActions],
   getInitialState: function () {
-    return []
+    return words
   },
 
   onFetchWords: function (wordLists) {
