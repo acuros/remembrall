@@ -1,5 +1,6 @@
 var React = require('react');
 var Reflux = require('reflux');
+var _ = require('underscore');
 var Q = require('q');
 var Link = require('react-router').Link;
 
@@ -8,6 +9,7 @@ var FacebookActions = require('actions/FacebookActions');
 var SpinnerActions = require('actions/SpinnerActions');
 
 var FacebookStore = require('stores/FacebookStore');
+var WordStore = require('stores/WordStore');
 var SpinnerStore = require('stores/SpinnerStore');
 
 var AwsHelper = require('utils/AwsHelper');
@@ -79,12 +81,27 @@ var App = React.createClass({
       .then(function() {
         that.setState({isDbPrepared: true});
       })
+      .then(function() {
+        SpinnerActions.show("Getting word lists ...");
+        return WordListActions.fetchWordLists.triggerAsync();
+      })
       .catch(function (errType, msg) {
         console.log(errType, msg);
       })
       .done(function () {
         SpinnerActions.hide();
-        that.props.history.replaceState(null, '/test/start/');
+        var path = that.props.location.pathname;
+        if(path != '/')
+          return;
+
+        var storedWords = WordStore.getInitialState();
+        var wordsNum = _.reduce(storedWords, function(sum, words) { return sum + words.length }, 0);
+        if(wordsNum == 0) {
+          that.props.history.replaceState(null, '/manage/');
+        }
+        else {
+          that.props.history.replaceState(null, '/test/start/');
+        }
       })
   },
   loadFacebookSDK: function (onFbAsyncInit) {

@@ -10,12 +10,6 @@ var WordListStore = require('stores/WordListStore');
 
 var WordTestStarter = React.createClass({
   mixins: [Reflux.connect(WordListStore, 'wordLists')],
-  componentDidMount: function() {
-    SpinnerActions.show("Getting word lists ...");
-    WordListActions.fetchWordLists.triggerAsync().then(function() {
-      SpinnerActions.hide();
-    });
-  },
 
   render: function() {
     if(this.state.wordLists.length == 0) {
