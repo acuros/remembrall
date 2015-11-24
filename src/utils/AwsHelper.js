@@ -63,6 +63,13 @@ var AwsHelper = {
       TableName: WORD_LIST_TABLE_NAME,
       KeyConditions: makeUserKeyCondition()
     }, callback);
+  },
+  putWordList: function(wordList, callback) {
+    callback = callback || function(){};
+    dynamodb.putItem({
+      TableName: WORD_LIST_TABLE_NAME,
+      Item: {user: {S: FacebookStore.getState().userId}, name: {S: wordList}}
+    }, callback);
   }
 };
 

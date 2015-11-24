@@ -1,7 +1,8 @@
 var Reflux = require('reflux');
 
 var WordListActions = Reflux.createActions({
-  fetchWordLists: {asyncResult: true}
+  fetchWordLists: {asyncResult: true},
+  addWordList: {asyncResult: true}
 });
 
 

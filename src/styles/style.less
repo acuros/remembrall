@@ -9,7 +9,8 @@ html, body {
 
   > header {
     margin-top: 10px;
-    padding-bottom: 20px;
+    height: 115px;
+    box-sizing: border-box;
     border-bottom: 1px solid #3c3c3c;
     text-align: center;
 
@@ -97,6 +98,40 @@ html, body {
     .show-meaning {
       margin-top: 15px;
       font-size: 16pt;
+    }
+  }
+}
+
+
+#manage-section {
+  overflow: hidden;
+  position: absolute;
+  top: 135px;
+  bottom: 0;
+
+  #word-list-list {
+    float: left;
+    margin: 0;
+    padding-top: 20px;
+    width: 250px;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 1px solid #000;
+
+    #new-word-list {
+      margin-top: 20px;
+      width: 120px;
+    }
+  }
+  #word-add-wrap {
+    float: left;
+    width: 720px;
+    margin-left: 30px;
+    fieldset {
+      border: 0;
+    }
+    dl {
+      margin: 0;
     }
   }
 }

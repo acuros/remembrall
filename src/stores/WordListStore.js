@@ -15,11 +15,27 @@ var WordListStore = Reflux.createStore({
     return wordLists
   },
 
+  onAddWordList: function(wordList) {
+    AwsHelper.putWordList(wordList, function(err, data) {
+      if(err) {
+        WordListActions.addWordList.failed({
+          type: 'Dynamodb',
+          msg: err
+        });
+        return;
+      }
+
+      wordLists.push(wordList);
+      WordListActions.addWordList.completed();
+      WordListStore.trigger(wordList);
+    });
+  },
+
   onFetchWordLists: function() {
     AwsHelper.fetchWordLists(function(err, data) {
       if (err) {
         WordListActions.fetchWordLists.failed({
-          type: 'Dynbamodb',
+          type: 'Dynamodb',
           msg: err
         });
         return;
@@ -28,9 +44,7 @@ var WordListStore = Reflux.createStore({
       _.extend(wordLists, data.Items.map(function(item) {
         return item['name']['S'];
       }));
-      if(wordLists.length == 0) {
-        wordLists.push('Default');
-      }
+      wordLists.push('Default');
       WordListActions.fetchWordLists.completed();
       WordListStore.trigger(wordLists);
     });
