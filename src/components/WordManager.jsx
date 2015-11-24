@@ -17,6 +17,10 @@ var WordManager = React.createClass({
     };
   },
 
+  componentWillMount: function() {
+    this.setState({wordLists: WordListStore.getInitialState()});
+  },
+
   render: function () {
     var lis = this.state.wordLists.map(function(wordList) {
       return (
