@@ -33,7 +33,7 @@ var WordListStore = Reflux.createStore({
   },
 
   onFetchWordLists: function() {
-    AwsHelper.fetchWordLists(function(err, data) {
+    AwsHelper.fetchWordLists(function(err, wordLists_) {
       if (err) {
         WordListActions.fetchWordLists.failed({
           type: 'Dynamodb',
@@ -42,9 +42,7 @@ var WordListStore = Reflux.createStore({
         return;
       }
 
-      _.extend(wordLists, data.Items.map(function(item) {
-        return item['name']['S'];
-      }));
+      _.extend(wordLists, wordLists_);
 
       Q.promise(function(resolve) {
           if(!_.contains(wordLists, "Default")) {

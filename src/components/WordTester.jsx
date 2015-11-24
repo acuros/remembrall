@@ -30,6 +30,7 @@ var WordTester = React.createClass({
       SpinnerActions.hide();
       var newCycleWords = [];
       for(var key in words) {
+        if(!_.contains(wordLists, key)) continue;
         _.extend(newCycleWords, words[key]);
       }
       that.startNewCycle(newCycleWords);

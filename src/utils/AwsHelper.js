@@ -37,21 +37,23 @@ var AwsHelper = {
 
   fetchWords: function(wordList, callback) {
     callback = callback || function(){};
-    wordList = wordList == 'Default' ? '' : wordList;
+    wordList = FacebookStore.getState().userId + wordList;
 
-    var keyCondition = makeUserKeyCondition();
-    keyCondition['wordList'] = {
-      ComparisonOperator: 'Eq',
-      AttributeValueList: [{S: wordList}]
+    var keyCondition = {
+      wordList: {
+        ComparisonOperator: 'EQ',
+          AttributeValueList: [{S: wordList}]
+      }
     };
     dynamodb.query({
       TableName: WORD_TABLE_NAME,
-      KeyConditions: makeUserKeyCondition()
+      KeyConditions: keyCondition,
+      IndexName: 'wordList-index'
     }, callback);
   },
   putWord: function(wordList, word, callback) {
     callback = callback || function(){};
-    wordList = wordList == 'Default' ? '' : wordList;
+    wordList = FacebookStore.getState().userId + wordList;
 
     dynamodb.putItem({
       TableName: WORD_TABLE_NAME,
@@ -64,10 +66,16 @@ var AwsHelper = {
     dynamodb.query({
       TableName: WORD_LIST_TABLE_NAME,
       KeyConditions: makeUserKeyCondition()
-    }, callback);
+    }, function(err, data) {
+      var wordLists = data.Items.map(function(item) {
+        return item['name']['S']
+      });
+      callback(err, wordLists);
+    });
   },
   putWordList: function(wordList, callback) {
     callback = callback || function(){};
+
     dynamodb.putItem({
       TableName: WORD_LIST_TABLE_NAME,
       Item: {user: {S: FacebookStore.getState().userId}, name: {S: wordList}}
