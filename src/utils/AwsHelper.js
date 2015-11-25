@@ -51,7 +51,6 @@ var AwsHelper = {
   },
   putWord: function(wordList, word, callback) {
     callback = callback || function(){};
-    wordList = FacebookStore.getState().userId;
 
     dynamodb.putItem({
       TableName: WORD_TABLE_NAME,
