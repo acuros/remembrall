@@ -56,6 +56,9 @@ var App = React.createClass({
           this.state.spinner.isVisible &&
           <Spinner message={this.state.spinner.message}/>
         }
+        <footer>
+          Source code is at <a href="https://github.com/acuros/remembrall">https://github.com/acuros/remembrall</a>
+        </footer>
       </div>
     );
   },
