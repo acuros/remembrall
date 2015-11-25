@@ -5,6 +5,7 @@ import sys
 import boto
 import boto.dynamodb2
 from boto.dynamodb2.table import Table, HashKey, RangeKey
+from boto.dynamodb2.fields import GlobalAllIndex
 
 
 SETUP_HOME = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +39,12 @@ def create_table(region):
             HashKey('user'),
             RangeKey('word')
         ],
+        global_indexes = [
+            GlobalAllIndex('WordList-index', parts=[
+                HashKey('user'),
+                RangeKey('wordList')
+            ])
+        ],
         throughput={
             'read': 1,
             'write': 1
@@ -70,7 +77,8 @@ def create_policies(region, fb_app_id):
 
     permission_policy['Statement'][0]['Resource'] = [
         u'arn:aws:dynamodb:{}:{}:table/Word'.format(region, account_id),
-        u'arn:aws:dynamodb:{}:{}:table/WordList'.format(region, account_id)
+        u'arn:aws:dynamodb:{}:{}:table/Word/index/wordList-index'.format(region, account_id),
+        u'arn:aws:dynamodb:{}:{}:table/WordList'.format(region, account_id),
     ]
 
 
