@@ -9,7 +9,7 @@ var WordListActions = require('actions/WordListActions');
 
 
 var WordManager = React.createClass({
-  mixins: [Reflux.listenTo(WordListStore, 'onWordListChange')],
+  mixins: [Reflux.listenTo(WordListStore, 'useFirstWordListByDefault')],
   getInitialState: function() {
     return {
       wordLists: [],
@@ -18,7 +18,7 @@ var WordManager = React.createClass({
   },
 
   componentWillMount: function() {
-    this.setState({wordLists: WordListStore.getInitialState()});
+    this.useFirstWordListByDefault(WordListStore.getInitialState());
   },
 
   render: function () {
@@ -104,7 +104,7 @@ var WordManager = React.createClass({
     });
   },
 
-  onWordListChange: function (wordLists) {
+  useFirstWordListByDefault: function (wordLists) {
     var wordList = this.state.wordList || wordLists[0];
     this.setState({
       wordLists: wordLists,
