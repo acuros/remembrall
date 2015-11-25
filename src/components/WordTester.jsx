@@ -11,6 +11,7 @@ var WordCard = require('components/WordCard');
 
 var WordTester = React.createClass({
   mixins: [Reflux.connect(WordStore, 'words')],
+  words: [],
   thisCycleWords: [],
   nextCycleWords: [],
 
@@ -31,7 +32,8 @@ var WordTester = React.createClass({
       var words = _.map(wordLists, function(wordList) {
         return allWords[wordList];
       });
-      that.startNewCycle(_.flatten(words));
+      that.words = _.flatten(words);
+      that.startNewCycle(that.words);
     });
   },
   render: function () {
@@ -84,7 +86,7 @@ var WordTester = React.createClass({
     });
   },
   restart: function () {
-    this.startNewCycle(this.state.words);
+    this.startNewCycle(this.words);
   },
   continueWithTheWrongs: function () {
     this.startNewCycle(this.nextCycleWords);
