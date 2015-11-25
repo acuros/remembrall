@@ -37,7 +37,6 @@ var AwsHelper = {
 
   fetchWords: function(wordList, callback) {
     callback = callback || function(){};
-    wordList = FacebookStore.getState().userId;
 
     var keyCondition = makeUserKeyCondition();
     keyCondition['wordList'] =  {
