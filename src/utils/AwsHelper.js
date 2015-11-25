@@ -37,13 +37,12 @@ var AwsHelper = {
 
   fetchWords: function(wordList, callback) {
     callback = callback || function(){};
-    wordList = FacebookStore.getState().userId + wordList;
+    wordList = FacebookStore.getState().userId;
 
-    var keyCondition = {
-      wordList: {
-        ComparisonOperator: 'EQ',
-          AttributeValueList: [{S: wordList}]
-      }
+    var keyCondition = makeUserKeyCondition();
+    keyCondition['wordList'] =  {
+      ComparisonOperator: 'EQ',
+      AttributeValueList: [{S: wordList}]
     };
     dynamodb.query({
       TableName: WORD_TABLE_NAME,
@@ -53,7 +52,7 @@ var AwsHelper = {
   },
   putWord: function(wordList, word, callback) {
     callback = callback || function(){};
-    wordList = FacebookStore.getState().userId + wordList;
+    wordList = FacebookStore.getState().userId;
 
     dynamodb.putItem({
       TableName: WORD_TABLE_NAME,
