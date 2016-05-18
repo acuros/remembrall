@@ -101,11 +101,11 @@ def create_role(trust_policy, permission_policy):
 
 def set_webpack_constant(fb_app_id, role_arn):
     project_home = SETUP_HOME.split(os.sep)[:-1]
-    path = os.sep.join(project_home + ['webpack.config.js'])
-    with open(path) as f:
-        data = f.read()
-    data = data.replace('__FB_APP_ID__', fb_app_id)
-    data = data.replace('__ROLE_ARN__', role_arn)
+    path = os.sep.join(project_home + ['local.webpack.config.js'])
+    data = '''module.exports = {{
+    FB_APP_ID: '{0}',
+    ROLE_ARN: '{1}'
+}};'''.format(fb_app_id, role_arn)
     with open(path, 'w') as f:
         f.write(data)
 

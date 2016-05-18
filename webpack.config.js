@@ -1,6 +1,16 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var localSettings = {
+    FB_APP_ID: '',
+    ROLE_ARN: ''
+};
+try {
+    localSettings = require('./local.webpack.config.js');
+}
+catch(e) {
+}
+
 module.exports = {
     entry: {
         app: './src/app.jsx',
@@ -21,8 +31,8 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new webpack.DefinePlugin({
-            FB_APP_ID: JSON.stringify('__FB_APP_ID__'),
-            ROLE_ARN: JSON.stringify('__ROLE_ARN__')
+            FB_APP_ID: JSON.stringify(localSettings.FB_APP_ID),
+            ROLE_ARN: JSON.stringify(localSettings.ROLE_ARN)
         })
     ],
     module: {
